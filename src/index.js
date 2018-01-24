@@ -1,39 +1,29 @@
 
-const constraints = { audio: true, video: false };
+import { h, render } from 'preact';
+import Recorder from './recorder';
+import App from '@/components/Widget';
 
-navigator.mediaDevices.getUserMedia(constraints)
-    .then(initializeRecorder)
-    .catch(function (err) { console.log(err.name + ': ' + err.message); });
+window.onload = function init () {
+    const constraints = { audio: true, video: false };
+    window.URL = window.URL || window.webkitURL;
 
-function initializeRecorder (stream) {
-    const AudioContext = window.AudioContext;
-    const context = new AudioContext();
-    const audioInput = context.createMediaStreamSource(stream);
-    const bufferSize = 2048;
-    // create a javascript node
-    const recorder = context.createScriptProcessor(bufferSize, 1, 1);
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => {
+            render((<App />), document.body);
+            // const AudioContext = window.AudioContext;
+            // const context = new AudioContext();
+            // const audioInput = context.createMediaStreamSource(stream);
 
-    console.log(context);
-
-    // specify the processing function
-    recorder.onaudioprocess = recorderProcess;
-    // connect stream to our recorder
-    audioInput.connect(recorder);
-    // connect our recorder to the previous destination
-    recorder.connect(context.destination);
-}
-
-function recorderProcess (e) {
-    const left = e.inputBuffer.getChannelData(0);
-    // console.log(left);
-    // console.log(convertFloat32ToInt16(left));
-}
-
-function convertFloat32ToInt16 (buffer) {
-    let l = buffer.length;
-    const buf = new Int16Array(l);
-    while (l--) {
-        buf[l] = Math.min(1, buffer[l]) * 0x7FFF;
-    }
-    return buf.buffer;
-}
+            // const recorder = new Recorder(audioInput);
+            // setTimeout(() => {
+            //     recorder.exportWAV(blob => {
+            //         const url = URL.createObjectURL(blob);
+            //         const au = document.createElement('audio');
+            //         au.controls = true;
+            //         au.src = url;
+            //         document.body.appendChild(au);
+            //     });
+            // }, 10000);
+        })
+        .catch(function (err) { console.log(err.name + ': ' + err.message); });
+};
