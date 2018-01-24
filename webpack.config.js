@@ -42,7 +42,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.js', 'css', '.json'],
+        extensions: ['.js', '.jsx', 'css', '.json'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
             config: path.resolve('./config')
