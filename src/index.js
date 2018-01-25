@@ -13,5 +13,4 @@ window.onload = function init () {
             render((<App audioSource={ audioInput } />), document.body);
         })
         .catch(function (err) { console.log(err.name + ': ' + err.message); });
-    render((<App />), document.body);
 };
