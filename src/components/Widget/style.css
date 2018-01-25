@@ -3,6 +3,12 @@
     right: 20px;
     bottom: 20px;
     padding-bottom: 50px;
+    font-size: 14px;
+}
+
+.container p {
+    padding: 0;
+    margin:  5px 0;
 }
 
 .avatar {
@@ -15,6 +21,7 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
+    box-shadow: 0 0 10px #ccc;
 }
 
 .avatar::after {
@@ -32,10 +39,19 @@
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 7px;
+    box-shadow: 0 0 10px #ccc;
+}
+
+.container[data-open=false] .mediaRecorder{
+    display: none;
+}
+
+.container[data-open=true] .avatar:after {
+    background: url('../../assets/img/close_white_32x32.png') no-repeat;
 }
 
 .btn {
-    padding: 15px 0;
+    padding: 15px;
     border: 1px solid #ef7c46;
     background-color: #fce5da;
     color:#ef7c46;
@@ -44,8 +60,7 @@
     font-weight: 800;
     align-items: center;
     display: inline-flex;
-    width: 230px;
-    justify-content: center;
+    width: 200px;
 }
 
 .btn::before {
@@ -67,6 +82,14 @@
 
 .btnMicrophone:hover::before {
   background: url('../../assets/img/im_fff_32x32.png') no-repeat;
+}
+
+.btnReplay::before {
+    background: url('../../assets/img/replay_ef7c46_32x32.png') no-repeat;
+}
+
+.btnReplay:hover::before {
+  background: url('../../assets/img/replay_white_32x32.png') no-repeat;
 }
 
 .btnStopRecording::before {
@@ -91,6 +114,14 @@
   background: url('../../assets/img/isf_fff_32x32.png') no-repeat;
 }
 
+.step1 .duration span,
+.step1 .progress span {
+    font-weight: 800;
+}
+
+.step2 audio {
+    width: 100%;
+}
 
 ul.steps {
     padding: 0;
@@ -138,28 +169,15 @@ ul.steps li:nth-child(3):before {
     content: '3';
 }
 
-.close {
-  position: absolute;
-  right: 32px;
-  top: 32px;
-  width: 32px;
-  height: 32px;
-  opacity: 0.3;
+.or {
+    text-align: center;
 }
-.close:hover {
-  opacity: 1;
+
+.or::after {
+    content: '\02C8';
+    display: block;
 }
-.close:before, .close:after {
-  position: absolute;
-  left: 15px;
-  content: ' ';
-  height: 33px;
-  width: 2px;
-  background-color: #333;
-}
-.close:before {
-  transform: rotate(45deg);
-}
-.close:after {
-  transform: rotate(-45deg);
+.or::before {
+    content: '\02CC';
+    display: block;
 }

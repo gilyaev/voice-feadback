@@ -31,7 +31,6 @@ function mergeBuffers (recBuffers, recLength) {
     for (var i = 0; i < recBuffers.length; i++) {
         result.set(recBuffers[i], offset);
         offset += recBuffers[i].length;
-        console.log(recBuffers[i].length);
     }
     return result;
 }
@@ -119,5 +118,9 @@ export default class Recorder {
         setTimeout(() => {
             cb(exportWAV('audio/wav'));
         }, 0);
+    }
+
+    destructor () {
+        clear();
     }
 }

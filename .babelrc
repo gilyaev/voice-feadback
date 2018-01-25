@@ -4,6 +4,7 @@
     ],
 
     "plugins": [
+        ["transform-decorators-legacy"],
         ["transform-react-jsx", { "pragma":"h" }],
         ["transform-runtime", {
             "polyfill": false,
