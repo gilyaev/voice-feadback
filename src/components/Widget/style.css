@@ -34,7 +34,7 @@
 }
 
 .mediaRecorder {
-    width: 230px;
+    width: 250px;
     border: 2px solid #ef7c46;
     padding: 20px;
     margin-bottom: 20px;
@@ -60,7 +60,7 @@
     font-weight: 800;
     align-items: center;
     display: inline-flex;
-    width: 200px;
+    width: 220px;
 }
 
 .btn::before {
@@ -121,6 +121,13 @@
 
 .step2 audio {
     width: 100%;
+}
+
+.step2 .feedbackForm input {
+    width: 230px;
+    border: 1px solid #ef7c46;
+    margin-bottom: 5px;
+    padding: 10px;
 }
 
 ul.steps {

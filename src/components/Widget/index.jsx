@@ -9,11 +9,11 @@ export default class Widget extends Component {
         super(props);
 
         this.state = {
-            stage: 0,
-            open: false,
+            stage: 3,
+            open: true,
             timer: 0,
             timerId: null,
-            maxDuration: 1,
+            maxDuration: 5,
             recorder: null,
             feedback: null
         };
@@ -22,7 +22,7 @@ export default class Widget extends Component {
     @bind
     processStage () {
         let { stage } = this.state;
-        stage = (stage < 2) ? ++stage : 0;
+        stage = (stage < 3) ? ++stage : 0;
         this.setState({ stage });
 
         if (stage === 1) {
@@ -52,7 +52,7 @@ export default class Widget extends Component {
 
         recorder = recorder || new Recorder(this.props.audioSource);
         recorder.destructor();
-        
+
         const timerId = setInterval(() => {
             let { maxDuration, timerId, stage } = this.state;
             if (timer === maxDuration) {
@@ -114,12 +114,26 @@ export default class Widget extends Component {
                 </div>
                 <a className={`${styles.btn} ${styles.btnReplay}`} onclick={this.replayFeedback}>Replay</a>
                 <div className={ styles.or }>OR</div>
-                <a className={`${styles.btn} ${styles.btnSendFile}`} onclick={this.processStage}>Send Feedback</a>
+                <div className={ styles.feedbackForm }>
+                    <input type="text" name="name"  placeholder="Your name (optional)"/>
+                    <input type="email" name="email" placeholder="Your email (optional)"/>
+                    <input type="phone" name="phone" placeholder="Your phone (optional)"/>
+                    <a className={`${styles.btn} ${styles.btnSendFile}`} onclick={this.processStage}>Send Feedback</a>
+                </div>
                 <ul className={ styles.steps }>
                     <li>Record</li>
                     <li className={ styles.active }>Listen</li>
                     <li>Send</li>
                 </ul>
+            </div>;
+            break;
+        case 3:
+            stageBlock = <div className={styles.step3}>
+                <div>
+                    <strong>Your feadback has been sent. Thank you.</strong>
+                    <img src={require('../../assets/img/yswd.png')} width="200"/>
+                    <a className={`${styles.btn} ${styles.btnMicrophone}`} onclick={this.replayFeedback}>Leave Another Feedback</a>
+                </div>
             </div>;
             break;
         default:
