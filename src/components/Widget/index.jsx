@@ -9,11 +9,11 @@ export default class Widget extends Component {
         super(props);
 
         this.state = {
-            stage: 3,
-            open: true,
+            stage: 0,
+            open: false,
             timer: 0,
             timerId: null,
-            maxDuration: 5,
+            maxDuration: 30,
             recorder: null,
             feedback: null
         };
