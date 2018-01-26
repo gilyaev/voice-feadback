@@ -82,6 +82,10 @@ export default class Widget extends Component {
     }
 
     componentDidMount () {
+        setTimeout(() => {
+            this.toggle();
+            this.audioManager.play();
+        }, 5000);
     }
 
     render ({ }, { maxDuration, stage, open, timer, feedback }) {
@@ -158,6 +162,7 @@ export default class Widget extends Component {
 
         return (
             <div className={ styles.container } data-open={ open ? 'true' : 'false' }>
+                <audio src={require('../../assets/sounds/popup.wav')} autostart="true" ref={ audioManager => this.audioManager = audioManager }></audio>
                 <div className={ styles.mediaRecorder }>
                     { stageBlock }
                 </div>
