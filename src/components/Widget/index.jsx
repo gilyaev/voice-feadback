@@ -56,7 +56,7 @@ export default class Widget extends Component {
         let { recorder } = this.state;
 
         recorder = recorder || new Recorder(this.props.audioSource);
-        recorder.destructor();
+        recorder.start();
 
         const timerId = setInterval(() => {
             let { maxDuration, timerId, stage } = this.state;
@@ -74,9 +74,8 @@ export default class Widget extends Component {
     stopRecording () {
         const { recorder, timerId } = this.state;
         window.clearInterval(timerId);
-        recorder.exportWAV(blob => {
+        recorder.stop(blob => {
             const feedback = URL.createObjectURL(blob);
-            recorder.destructor();
             this.setState({ feedback });
         });
     }

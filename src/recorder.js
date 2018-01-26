@@ -1,13 +1,12 @@
+const RECORD_STATUS_PAUSE = 0;
+const RECORD_STATUS_SILENCE = -1;
+const RECORD_STATUS_RECORDING = 1;
+
+let status = 0;
 let recLength = 0;
 let recBuffersL = [];
 let recBuffersR = [];
 let sampleRate;
-
-function record (e) {
-    recBuffersL.push(new Float32Array(e.inputBuffer.getChannelData(0)));
-    recBuffersR.push(new Float32Array(e.inputBuffer.getChannelData(1)));
-    recLength += e.inputBuffer.getChannelData(0).length;
-}
 
 function exportWAV (type) {
     let bufferL = mergeBuffers(recBuffersL, recLength);
@@ -109,18 +108,53 @@ export default class Recorder {
 
         source.connect(this.node);
         this.node.connect(this.context.destination);
-        this.node.onaudioprocess = record;
+        this.node.onaudioprocess = this.onRecord;
 
         sampleRate = this.context.sampleRate;
     }
 
-    exportWAV (cb) {
-        setTimeout(() => {
-            cb(exportWAV('audio/wav'));
-        }, 0);
+    /**
+     * The onaudioprocess event handler of the ScriptProcessorNode interface represents the EventHandler
+     * to be called for the audioprocess event that is dispatched to ScriptProcessorNode node types.
+     * An event of type AudioProcessingEvent will be dispatched to the event handler.
+     *
+     * @param {Object} e The Web Audio API AudioProcessingEvent represents events that occur
+     *                   when a ScriptProcessorNode input buffer is ready to be processed.
+     */
+    onRecord (e) {
+        if (status !== RECORD_STATUS_RECORDING) return;
+        recBuffersL.push(new Float32Array(e.inputBuffer.getChannelData(0)));
+        recBuffersR.push(new Float32Array(e.inputBuffer.getChannelData(1)));
+        recLength += e.inputBuffer.getChannelData(0).length;
     }
 
-    destructor () {
+    /**
+     * Start recording voice:
+     * - change status to recording
+     * - clear the voice that  can be written before
+     */
+    start () {
+        status = RECORD_STATUS_RECORDING;
         clear();
+    }
+
+    /**
+     * Set recording on ppause.
+     */
+    pause () {
+        status = RECORD_STATUS_PAUSE;
+    }
+
+    /**
+     * Stop recording and export result.
+     *
+     * @param {function} cb The callback that be call when recorded audio will be readdy
+     * @param {string} type A type of audio file
+     */
+    stop (cb = () => { }, type = 'audio/wav') {
+        status = RECORD_STATUS_SILENCE;
+        setTimeout(() => {
+            cb(exportWAV(type));
+        }, 0);
     }
 }
