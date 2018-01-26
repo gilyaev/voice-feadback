@@ -36,7 +36,12 @@ export default class Widget extends Component {
 
     @bind
     toggle () {
-        this.setState({ open: !this.state.open });
+        let { stage, open } = this.state;
+        const newOpen = !this.state.open;
+        if (stage === 3 && !newOpen) {
+            stage = 0;
+        }
+        this.setState({ open: newOpen, stage });
     }
 
     @bind
@@ -90,7 +95,7 @@ export default class Widget extends Component {
         switch (stage) {
         case 1:
             stageBlock = <div className={ styles.step1 }>
-                <p><strong>Speak now, your feedback is recording!</strong></p>
+                <h3>Speak now, your feedback is recording!</h3>
                 <p className={ styles.progress }><span>Recording:</span> { duration }</p>
                 <p className={ styles.duration }>Max duration <span>{ maxDuration }</span> seconds</p>
                 <a
@@ -99,38 +104,38 @@ export default class Widget extends Component {
                 >
                     Stop Recording
                 </a>
-                <ul className={ styles.steps }>
+                {/* <ul className={ styles.steps }>
                     <li className={ styles.active }>Record</li>
                     <li>Listen</li>
                     <li>Send</li>
-                </ul>
+                </ul> */}
             </div>;
             break;
         case 2:
             stageBlock = <div className={ styles.step2 }>
-                <p><strong>Your feeadback is ready to send!</strong></p>
+                <h3>Your feeadback is ready to send!</h3>
                 <div>
                     <audio src={ feedback } controls="controls"/>
                 </div>
                 <a className={`${styles.btn} ${styles.btnReplay}`} onclick={this.replayFeedback}>Replay</a>
                 <div className={ styles.or }>OR</div>
                 <div className={ styles.feedbackForm }>
-                    <input type="text" name="name"  placeholder="Your name (optional)"/>
+                    <input type="text" name="name" placeholder="Your name (optional)"/>
                     <input type="email" name="email" placeholder="Your email (optional)"/>
                     <input type="phone" name="phone" placeholder="Your phone (optional)"/>
                     <a className={`${styles.btn} ${styles.btnSendFile}`} onclick={this.processStage}>Send Feedback</a>
                 </div>
-                <ul className={ styles.steps }>
+                {/* <ul className={ styles.steps }>
                     <li>Record</li>
                     <li className={ styles.active }>Listen</li>
                     <li>Send</li>
-                </ul>
+                </ul> */}
             </div>;
             break;
         case 3:
             stageBlock = <div className={styles.step3}>
                 <div>
-                    <strong>Your feadback has been sent. Thank you.</strong>
+                    <h3>Your feadback has been sent. Thank you.</h3>
                     <img src={require('../../assets/img/yswd.png')} width="200"/>
                     <a className={`${styles.btn} ${styles.btnMicrophone}`} onclick={this.replayFeedback}>Leave Another Feedback</a>
                 </div>
@@ -138,13 +143,15 @@ export default class Widget extends Component {
             break;
         default:
             stageBlock = <div className={ styles.step0 }>
-                <p><strong>Is your microphone ready?</strong></p>
-                <a className={`${styles.btn} ${styles.btnMicrophone}`} onclick={ this.processStage }>Leave Feedback</a>
+                <h3>Leave feedback</h3>
+                <p>Your feedback is important to us. Do three simple steps to delivery it to us.</p>
                 <ul className={ styles.steps }>
                     <li>Record</li>
                     <li>Listen</li>
                     <li>Send</li>
                 </ul>
+                <h3>Is your microphone ready?</h3>
+                <a className={`${styles.btn} ${styles.btnMicrophone}`} onclick={ this.processStage }>Start recording</a>
             </div>;
             break;
         }

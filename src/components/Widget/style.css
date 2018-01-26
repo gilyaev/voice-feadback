@@ -3,12 +3,18 @@
     right: 20px;
     bottom: 20px;
     padding-bottom: 50px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
-.container p {
+.container p,
+.container h3 {
     padding: 0;
     margin:  5px 0;
+}
+
+.container h3 {
+    font-size: 1.3em;
+    margin: 0px 0 10px;
 }
 
 .avatar {
@@ -61,6 +67,7 @@
     align-items: center;
     display: inline-flex;
     width: 220px;
+    margin: 5px 0;
 }
 
 .btn::before {
@@ -138,12 +145,13 @@ ul.steps {
 
 ul.steps li {
     display: inline;
-    margin-left: 5px;
+    margin-right: 18px;
     font-size: .9em;
     font-weight: 800;
 }
+
 ul.steps li::before {
-    margin-right: 5px;
+    margin-right: 10px;
     border-radius: 50%;
     width: 20px;
     height: 20px;
