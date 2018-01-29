@@ -1,6 +1,6 @@
-const RECORD_STATUS_PAUSE = 0;
-const RECORD_STATUS_SILENCE = -1;
-const RECORD_STATUS_RECORDING = 1;
+export const RECORD_STATUS_PAUSE = 0;
+export const RECORD_STATUS_SILENCE = -1;
+export const RECORD_STATUS_RECORDING = 1;
 
 let status = 0;
 let recLength = 0;
@@ -139,10 +139,17 @@ export default class Recorder {
     }
 
     /**
-     * Set recording on ppause.
+     * Set recording on pause.
      */
     pause () {
         status = RECORD_STATUS_PAUSE;
+    }
+
+    /**
+     * Resume recording.
+     */
+    resume () {
+        status = RECORD_STATUS_RECORDING;
     }
 
     /**
@@ -156,5 +163,9 @@ export default class Recorder {
         setTimeout(() => {
             cb(exportWAV(type));
         }, 0);
+    }
+
+    get status () {
+        return status;
     }
 }

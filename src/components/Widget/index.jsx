@@ -1,7 +1,12 @@
 import { bind } from 'decko';
 import { h, Component } from 'preact';
 
-import Recorder from '@/recorder';
+import { default as Recorder,
+    RECORD_STATUS_PAUSE,
+    RECORD_STATUS_SILENCE,
+    RECORD_STATUS_RECORDING
+} from '@/recorder';
+
 import styles from './style.css';
 
 export default class Widget extends Component {
@@ -36,11 +41,29 @@ export default class Widget extends Component {
 
     @bind
     toggle () {
-        let { stage, open } = this.state;
+        let { stage, open, recorder } = this.state;
         const newOpen = !this.state.open;
+
+        if (
+            stage === 1 &&
+            !newOpen &&
+            recorder &&
+            recorder.status === RECORD_STATUS_RECORDING
+        ) {
+            recorder.pause();
+        }
+
+        if (recorder &&
+            recorder.status === RECORD_STATUS_PAUSE &&
+            newOpen
+        ) {
+            recorder.resume();
+        }
+
         if (stage === 3 && !newOpen) {
             stage = 0;
         }
+
         this.setState({ open: newOpen, stage });
     }
 
@@ -62,6 +85,10 @@ export default class Widget extends Component {
             let { maxDuration, timerId, stage } = this.state;
             if (timer === maxDuration) {
                 this.processStage();
+                return;
+            }
+
+            if (recorder.status === RECORD_STATUS_PAUSE) {
                 return;
             }
 
