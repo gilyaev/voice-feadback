@@ -60,6 +60,10 @@ export default class Widget extends Component {
             recorder.resume();
         }
 
+        if (stage === 2) {
+            this.feedbackAudio.pause();
+        }
+
         if (stage === 3 && !newOpen) {
             stage = 0;
         }
@@ -145,7 +149,7 @@ export default class Widget extends Component {
             stageBlock = <div className={ styles.step2 }>
                 <h3>Your feeadback is ready to send!</h3>
                 <div>
-                    <audio src={ feedback } controls="controls"/>
+                    <audio src={feedback} ref={audioManager => this.feedbackAudio = audioManager} controls="controls"/>
                 </div>
                 <a className={`${styles.btn} ${styles.btnReplay}`} onclick={this.replayFeedback}>Replay</a>
                 <div className={ styles.or }>OR</div>
