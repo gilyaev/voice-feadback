@@ -175,6 +175,7 @@ export default class Widget extends Component {
                     <h3>Your feadback has been sent. Thank you.</h3>
                     <img src={require('../../assets/img/yswd.png')} width="200"/>
                     <a className={`${styles.btn} ${styles.btnMicrophone}`} onclick={this.replayFeedback}>Leave Another Feedback</a>
+                    <a className={`${styles.btn} ${styles.btnTxt}`} onClick={this.toggle}>Close</a>
                 </div>
             </div>;
             break;
@@ -197,6 +198,7 @@ export default class Widget extends Component {
             <div className={ `${styles.container} ${this.props.fixed && styles.containerFixed}`} data-open={ open ? 'true' : 'false' }>
                 <audio src={require('../../assets/sounds/popup.wav')} autostart="true" ref={ audioManager => this.audioManager = audioManager }></audio>
                 <div className={ styles.mediaRecorder }>
+                    <div className={styles.close} onclick={this.toggle}>&nbsp;</div>
                     { stageBlock }
                 </div>
                 {/*<div className={ styles.avatar } onClick={ this.toggle }></div>*/}

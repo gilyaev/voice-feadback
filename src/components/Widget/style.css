@@ -42,14 +42,27 @@
 }
 
 .mediaRecorder {
+    position: relative;
     width: 330px;
     border: 2px solid #4670ef;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 50px 20px 20px;
     border-radius: 7px;
     box-shadow: 0 0 10px #ccc;
     background: #fff;
     text-align: center;
+}
+
+.close {
+    position: absolute;
+    top:5px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.close:after{
+    display: inline-block;
+    font-size: 28px !important;
+    content: "\00d7"; /* This will render the 'X' */
 }
 
 .container[data-open=false] .mediaRecorder{
@@ -69,7 +82,7 @@
     font-weight: 800;
     align-items: center;
     display: inline-flex;
-    width: 220px;
+    /*width: 220px;*/
     margin: 5px 0;
     border-radius: 6px;
 }
@@ -80,6 +93,14 @@
     width: 32px;
     display: block;
     margin-right: 10px;
+}
+
+.btnTxt::before {
+    content: '';
+    height: 0px;
+    width: 0px;
+    display: block;
+    margin-right: 0px;
 }
 
 .btn:hover {

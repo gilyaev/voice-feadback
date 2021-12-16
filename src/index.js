@@ -16,11 +16,10 @@ window.onload = function init () {
             autoStart = item[1];
         }
 
-        if (item[0] === 'parentNode') {
+        if (item[0] === 'parentNode' && document.querySelector(item[1])) {
             parentNode = item[1];
         }
     });
-
     // console.log(document.querySelector(parentNode), parentNode);
 
     window.URL = window.URL || window.webkitURL;
