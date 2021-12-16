@@ -7,6 +7,9 @@
 </head>
 
 <body>
+    <div class="test" style="border: 2px solid red">
+
+    </div>
     <script>
         (function (w, d, s, u, r, a, m) {
             w['g_voicefeedback'] = r; w[r] = w[r] || function () {
@@ -15,6 +18,12 @@
             a = d.createElement(s), m = d.getElementsByTagName(s)[0]; a.async = 1;
             a.src = u; m.parentNode.insertBefore(a, m);
         })(window, document, 'script', 'build/bundle.js?ss2314234', 'voicefeedback');
+
+        voicefeedback('initCb', function (app) {
+            window.elmovoiceapp = app;
+        });
+        voicefeedback('autoStart', true);
+        // voicefeedback('parentNode', '.test');
     </script>
 </body>
 
